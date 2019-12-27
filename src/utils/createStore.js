@@ -1,4 +1,4 @@
-function createStore(stateChanger) {
+export function createStore(stateChanger) {
   let state = null;
   const listeners = [];
   const subscribe = listener => listeners.push(listener);

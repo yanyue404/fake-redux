@@ -16,11 +16,23 @@
         <button id="incrementAsync">Increment async</button>
       </p>
     </div>
-    <script src="../src/index.js"></script>
+
     <script>
       const initData = {
         count: 0
       };
+      function createStore(stateChanger) {
+        let state = null;
+        const listeners = [];
+        const subscribe = listener => listeners.push(listener);
+        const getState = () => state;
+        const dispatch = action => {
+          state = stateChanger(state, action);
+          listeners.forEach(listener => listener());
+        };
+        dispatch({}); // 初始化 state
+        return { getState, dispatch, subscribe };
+      }
 
       function countStateUpdate(state, action) {
         if (!state) {
